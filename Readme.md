@@ -10,31 +10,31 @@ The blue team machine allows you to investigate the attack further using Kansa, 
 # Design
 ![](images/design.png)
 
-**Machines**
+## Machines
 * **Red Team Caldera**: This machine is Amazon Linux 2 (Redhat based) with size t2.micro (no cost with AWS Free tier)
 * **Blue Team HELK**: this machine is also Amazon Linux 2 with size t2.large (8 GB, 2 vcpu) and 80 GB of disk space 
 * **ADLAB Machines**: Both the DC and Workstation are Windows Server 2019 with size t2.micro (no cost with AWS Free tier)
 
 # Installation
 
-## Prerequistes:
+## Prerequisites:
 
 To install this cloud lab, you will need to have:
 
 * An AWS Account 
 * Windows as a host machine or run the lab in a windows VM (as we run a powershell script to configure the ADLAB machines)
 * AWS Cli installed
-* Terraform is copied to any folder in %PATH Environment
+* Terraform is copied to any folder in %PATH% Environment
 
 ## Installation
 
 To install, you will need to follow these steps:
 
 * Go to your AWS Account and create a user with administrator permissions and get its ACCESS KEY and SECRET KEY
-* run aws configure in your cmd and provide the ACCESS KEY, SECRET KEY, the region as eu-west-1
-* Switch to eu-west-1 region
+* run ```aws configure``` in your command prompt (cmd) and provide the ACCESS KEY, SECRET KEY, the region as eu-west-1
+* Switch to eu-west-1 region in your aws console (on the browser)
 * Go to EC2 --> Instances --> Key Pair and create a key with name ```ec2_key_pair``` all lowercase and save the .pem key file
-* Copy your ec2_key_pair.pem file to your ```C:\Users\<your username>\.ssh``` folder and rename it to ```id_rsa```
+* Copy your ```ec2_key_pair.pem``` file to your ```C:\Users\<your username>\.ssh``` folder and rename it to ```id_rsa```
 * Open cmd again, go to the purple lab directory (this project folder) and run ```terraform init``` and then ```terraform apply``` and say "yes"
 * It will take ~ 40 mins to complete.
 
@@ -47,13 +47,13 @@ To destroy, run ```terraform destroy --auto-approve```
 ## Credentials
 
 **To access the domain, you can use these credentials**
-* **Administrator/LabPass1**: this is the local admin account, you can use it remotely with RDP or powershell remoting
-* **adlab\ddean/LabPass1**: This is the domain admin account, you can use it to access both machines as a domain admin
-* **adlab\kbaehr/LabPass1**: This is the workstation user, it doesn't have admin privileges (Possible privilege escalation?). Feel free to add him to the local admin group if you want to test UAC bypasses
+* **Administrator, Pass:LabPass1**: this is the local admin account, you can use it remotely with RDP or powershell remoting
+* **adlab\ddean, Pass:LabPass1**: This is the domain admin account, you can use it to access both machines as a domain admin
+* **adlab\kbaehr, Pass:LabPass1**: This is the workstation user, it doesn't have admin privileges (Possible privilege escalation?). Feel free to add him to the local admin group if you want to test UAC bypasses
 
 **To access the blue team machine HELK**
 * **SSH**: you can connect using ssh ```ec2-user@<blueteam public ip>``` and it will use your key pair you moved to .ssh folder and renamed to id_rsa
-* **From the browser**: use the machine public IP and connect to it using https from your browser with credentials: helk/LabPass1
+* **From the browser**: use the machine public IP and connect to it using https from your browser with credentials: **helk/LabPass1**
 
 **To access the red team caldera machine**
 * **SSH**: you can connect using ssh ```ec2-user@<redteam public ip>``` 
