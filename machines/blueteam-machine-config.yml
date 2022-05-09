@@ -1,0 +1,55 @@
+#cloud-config
+packages:
+  - python3
+  - python3-pip
+runcmd:
+  - echo "Task Initiated" > /tmp/init.log
+  - sudo yum update -y
+  - sudo yum install -y less openssh-clients https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm >> /tmp/init.log
+  - sudo yum update -y
+  - sudo yum install -y gssntlmssp >> /tmp/init.log
+  - curl -sSL https://github.com/PowerShell/PowerShell/releases/download/v7.2.3/powershell-7.2.3-1.rh.x86_64.rpm -o /tmp/powershell-linux.rpm  >> /tmp/init.log
+  - sudo yum install -y /tmp/powershell-linux.rpm  >> /tmp/init.log
+  - rm -f /tmp/powershell-linux.rpm
+  - sudo yum upgrade -y
+  - sudo yum clean all 
+  - sudo rm -rf /var/cache/yum
+  - cd /usr/src
+  - sudo yum install -y git docker httpd >> /tmp/init.log 
+  - sudo systemctl enable docker
+  - sudo systemctl start docker
+  - sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+  - sudo git clone https://github.com/iknowjason/HELK.git >> /tmp/init.log
+  - cd /usr/src/HELK/docker
+  - sudo ./helk_install.sh -p LabPass1 -b 'helk-kibana-analysis-alert' -i 192.168.20.100
+  - sudo docker network rm helk_network
+  - sudo ./helk_install.sh -p LabPass1 -b 'helk-kibana-analysis-alert' -i 192.168.20.100 
+  - sudo yum install -y python python-devel python3-devel git yara gcc
+  - cd /home/ec2-user
+  - git clone https://github.com/davehull/Kansa.git
+  - git clone https://github.com/SigmaHQ/sigma.git
+  - git clone https://github.com/volatilityfoundation/volatility3.git
+  - git clone https://github.com/volatilityfoundation/volatility.git
+  - cd /home/ec2-user/volatility
+  - curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py
+  - sudo python get-pip.py >> /tmp/init.log
+  - python -m pip install distorm3==3.4.4 >> /tmp/init.log
+  - python -m pip install lxml pefile construct pdbparser  >> /tmp/init.log
+  - sudo yum install libdnet-devel.x86_64 --enablerepo=epel -y >> /tmp/init.log
+  - sudo ln -s /home/ec2-user/.local/lib/python2.7/site-packages/usr/lib/libyara.so /usr/lib/libyara.so
+  - wget https://ftp.dlitz.net/pub/dlitz/crypto/pycrypto/pycrypto-2.6.1.tar.gz
+  - tar -xvzf pycrypto-2.6.1.tar.gz
+  - cd /home/ec2-user/volatility/pycrypto-2.6.1
+  - sudo python setup.py build install >> /tmp/init.log
+  - cd /home/ec2-user/volatility
+  - sudo python setup.py install >> /tmp/init.log
+  - cd /home/ec2-user/volatility3
+  - python3 -m pip install -r requirements.txt
+  - sudo python3 setup.py install >> /tmp/init.log
+  - mkdir /home/ec2-user/tools
+  - cd /home/ec2-user/tools
+  - wget https://github.com/Crypt2Shell/Comae-Toolkit/blob/master/Comae-Toolkit-3.0.20171228.1.zip --no-check-certificate
+  - wget https://s3.amazonaws.com/cyb-us-prd-kape/kape.zip --no-check-certificate
+  - echo "Done" >> /tmp/init.log
+
+  
