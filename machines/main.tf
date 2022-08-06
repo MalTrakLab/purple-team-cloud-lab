@@ -236,9 +236,39 @@ resource "aws_security_group" "redteam-ingress-all" {
    cidr_blocks = ["0.0.0.0/0"]
   }
 }
+#Microsoft Windows Server 2019 Base
+data "aws_ami" "win2019" {
+  most_recent = true
+  owners = ["amazon"]
+
+  filter {
+    name = "name"
+    values = ["Windows_Server-2019-English-Full-Base-*"]
+  }
+}
+
+data "aws_ami" "amazonlinux" {
+  most_recent = true
+  owners = ["amazon"]
+
+  filter {
+    name = "name"
+    values = ["amzn2-ami-hvm-*-gp2"]
+  }
+  filter {
+    name = "architecture"
+    values = ["x86_64"]
+  }
+  filter {
+    name = "virtualization-type"
+    values = ["hvm"]
+  }
+}
+
+
 
 resource "aws_instance" "adlab-dc" {
-  ami           = "ami-03498572c21a9e8af"
+  ami           = data.aws_ami.win2019.id
   instance_type = "t2.micro"
   key_name = "ec2_key_pair"
   security_groups = [aws_security_group.adlab-ingress-all.id]
@@ -298,7 +328,7 @@ resource "aws_instance" "adlab-dc" {
 }
 
 resource "aws_instance" "adlab-win10" {
-  ami           = "ami-03498572c21a9e8af"
+  ami           = data.aws_ami.win2019.id
   instance_type = "t2.micro"
   key_name = "ec2_key_pair"
   security_groups = [aws_security_group.adlab-ingress-all.id]
@@ -359,7 +389,7 @@ resource "aws_instance" "adlab-win10" {
 }
 
 resource "aws_instance" "blueteam-helk" {
-  ami           = "ami-0ffea00000f287d30"
+  ami           = data.aws_ami.amazonlinux.id
   instance_type = "t2.large"
   key_name = var.key_name
   security_groups = [aws_security_group.blueteam-ingress-all.id]
@@ -390,7 +420,7 @@ resource "aws_instance" "blueteam-helk" {
 }
 
 resource "aws_instance" "redteam-caldera" {
-  ami           = "ami-0ffea00000f287d30"
+  ami           = data.aws_ami.amazonlinux.id
   instance_type = "t2.micro"
   key_name = "ec2_key_pair"
   security_groups = [aws_security_group.redteam-ingress-all.id]
