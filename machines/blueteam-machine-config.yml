@@ -30,6 +30,8 @@ runcmd:
   - git clone https://github.com/SigmaHQ/sigma.git
   - git clone https://github.com/volatilityfoundation/volatility3.git
   - git clone https://github.com/volatilityfoundation/volatility.git
+  - sudo chmod +x /home/ec2-user/volatility
+  - sudo chmod +x /home/ec2-user/volatility3
   - cd /home/ec2-user/volatility
   - curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py
   - sudo python get-pip.py >> /tmp/init.log
