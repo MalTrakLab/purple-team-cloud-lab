@@ -103,6 +103,7 @@ Execute-WhenOnline $IPAddr -Credential $cred -ScriptBlock {
     choco install sysmon -y | Out-Null
     choco install winlogbeat -y | Out-Null
     choco install wireshark -y | Out-Null
+    choco install git -y  | Out-Null
     (New-Object System.Net.WebClient).DownloadFile('https://github.com/iknowjason/BlueTools/blob/main/configs-pc.zip?raw=true', 'C:\ProgramData\chocolatey\lib\configs.zip')
     Expand-Archive -LiteralPath 'C:\ProgramData\chocolatey\lib\configs.zip' -DestinationPath 'C:\ProgramData\chocolatey\lib\configs'
     C:\ProgramData\chocolatey\lib\Sysmon\tools\sysmon.exe -accepteula -i C:\ProgramData\chocolatey\lib\configs\configs-pc\sysmonconfig-export.xml
@@ -123,9 +124,9 @@ Execute-WhenOnline $IPAddr -Credential $cred -ScriptBlock {
 
 #Adding Users & Finishing Configuration
 Execute-WhenOnline $IPAddr -Credential $cred -ScriptBlock {
-   
     #Starting winlogbeat
     start-service winlogbeat
+    git clone https://github.com/davehull/Kansa.git C:\Users\Public\Kansa
     Get-Content "C:\Log.txt"
 }
 

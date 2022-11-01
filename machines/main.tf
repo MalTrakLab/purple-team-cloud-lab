@@ -270,7 +270,7 @@ data "aws_ami" "amazonlinux" {
 resource "aws_instance" "adlab-dc" {
   ami           = data.aws_ami.win2019.id
   instance_type = "t2.micro"
-  key_name = "ec2_key_pair"
+  key_name = var.key_name
   security_groups = [aws_security_group.adlab-ingress-all.id]
   private_ip = "${var.subnet_cidr_prefix}.100"
   subnet_id = var.subnet_id
@@ -330,7 +330,7 @@ resource "aws_instance" "adlab-dc" {
 resource "aws_instance" "adlab-win10" {
   ami           = data.aws_ami.win2019.id
   instance_type = "t2.micro"
-  key_name = "ec2_key_pair"
+  key_name = var.key_name
   security_groups = [aws_security_group.adlab-ingress-all.id]
   private_ip = "${var.subnet_cidr_prefix}.110"
   subnet_id = var.subnet_id
@@ -422,7 +422,7 @@ resource "aws_instance" "blueteam-helk" {
 resource "aws_instance" "redteam-caldera" {
   ami           = data.aws_ami.amazonlinux.id
   instance_type = "t2.micro"
-  key_name = "ec2_key_pair"
+  key_name = var.key_name
   security_groups = [aws_security_group.redteam-ingress-all.id]
   private_ip = "${var.attacker_subnet_cidr_prefix}.100"
   subnet_id = var.attacker_subnet_id
