@@ -8,8 +8,11 @@ As well, you have a red team network with Caldera installed to simulate red team
 The blue team machine allows you to investigate the attack further using Kansa, Kape or through custom powershell scripts to collect volatile and non-volatile data and investigate them. This machine has Powershell remoting installed by default to connect to the AD network (using Negotiate/NTLM authentication).
 
 # Design
-![](images/design.png)
+<img src="images/design.png" width="550"/>
 
+# Installation Tutorial
+
+[![Installation Tutorial on YouTube](https://img.youtube.com/vi/C6UR8CGvsZ4/0.jpg)](https://www.youtube.com/watch?v=C6UR8CGvsZ4&list=PLR3v7tHBoHs041qVakGkx_5PyvNzWgiVd&index=2)
 ## Machines
 * **Red Team Caldera**: This machine is Amazon Linux 2 (Redhat based) with size t2.micro (no cost with AWS Free tier)
 * **Blue Team HELK**: this machine is also Amazon Linux 2 with size t2.large (8 GB, 2 vcpu) and 30 GB of disk space 
@@ -116,9 +119,9 @@ This machine has Caldera installed. Using caldera, you can drop a backdoor into 
 Feel free to reach out to us through [https://maltrak.com](https://maltrak.com)
 
 ## Follow us at:
-* Youtube: [https://www.youtube.com/c/AmrThabet](https://www.youtube.com/c/AmrThabet)
-* Linkedin: [https://www.linkedin.com/company/maltrak](https://www.linkedin.com/company/maltrak)
+* Youtube: [https://youtube.com/@MalTrakSecurity](https://youtube.com/@MalTrakSecurity)
+* Linkedin: [https://linkedin.com/company/maltrak](https://linkedin.com/company/maltrak)
 * Twitter: [https://twitter.com/Amr_Thabet](https://twitter.com/Amr_Thabet)
-* Facebook: [https://www.facebook.com/MaltrakTraining](https://www.facebook.com/MaltrakTraining)
+* Facebook: [https://facebook.com/MaltrakTraining](https://facebook.com/MaltrakTraining)
 * Blog: [https://medium.com/maltrak](https://medium.com/maltrak)
 * Website: [https://maltrak.com](https://maltrak.com)
