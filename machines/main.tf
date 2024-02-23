@@ -323,7 +323,7 @@ resource "aws_instance" "adlab-dc" {
   }
   
   provisioner "local-exec" {
-    command = "powershell.exe -ExecutionPolicy Unrestricted -Command ${path.module}\\Setup-AD.ps1 ${aws_instance.adlab-dc.public_ip}"
+    command = "powershell.exe -ExecutionPolicy Unrestricted -Command Unblock-File ${path.module}\\Setup-AD.ps1;${path.module}\\Setup-AD.ps1 ${aws_instance.adlab-dc.public_ip}"
   }
 }
 
@@ -383,7 +383,7 @@ resource "aws_instance" "adlab-win10" {
   }
 
   provisioner "local-exec" {
-    command = "powershell.exe -ExecutionPolicy Unrestricted -Command ${path.module}\\Setup-Workstation.ps1 ${aws_instance.adlab-win10.public_ip}"
+    command = "powershell.exe -ExecutionPolicy Unrestricted -Command Unblock-File ${path.module}\\Setup-Workstation.ps1;${path.module}\\Setup-Workstation.ps1 ${aws_instance.adlab-win10.public_ip}"
   }
   depends_on = [aws_instance.adlab-dc]
 }

@@ -12,7 +12,7 @@ The blue team machine allows you to investigate the attack further using Kansa, 
 
 ## Machines
 * **Red Team Caldera**: This machine is Amazon Linux 2 (Redhat based) with size t2.micro (no cost with AWS Free tier)
-* **Blue Team HELK**: this machine is also Amazon Linux 2 with size t2.large (8 GB, 2 vcpu) and 80 GB of disk space 
+* **Blue Team HELK**: this machine is also Amazon Linux 2 with size t2.large (8 GB, 2 vcpu) and 30 GB of disk space 
 * **ADLAB Machines**: Both the DC and Workstation are Windows Server 2019 with size t2.micro (no cost with AWS Free tier)
 
 # Installation
@@ -57,7 +57,7 @@ To destroy, run ```terraform destroy --auto-approve```
 
 **To access the red team caldera machine**
 * **SSH**: you can connect using ssh ```ec2-user@<redteam public ip>``` 
-* **From the browser**: connect using HTTP to port 8888. The credentials are saved at /tmp/password. You can read it by accessing the machine using ssh and run ```cat /tmp/password```
+* **From the browser**: connect using HTTP to port 8888. The credentials are red/LabPass1 or blue/LabPass1.
 
 # Capabilities:
 
@@ -83,7 +83,7 @@ This machine is created not just for log analysis but also for more in-depth inv
 * **Sigma Rules**: Sigma is useful in creating new alerts or new detections, you can compile them for elastialert. Please follow HELK documentation for how to do that.
 * **Powershell Remoting**: Powershell remoting installation is quite tricky to work on Linux but it's here and it's working like a charm. It's very useful to connect directly to ADLAB domain and perform some actions as a blue teamer to investigate attacks or transfer files to the ADLAB domain.
 * **Kansa & Kape**: Both these tools are known for DFIR and remote triage. Kansa.ps1 won't work properly on Linux but you can execute its modules directly on the AD machines using powershell remoting
-* **Volatility**: volatility is a known tool for memory forensics and here we have volatility and volatility3 installed by default with all their additional modules
+* **Volatility**: volatility is a known tool for memory forensics and here we have volatility and volatility3 (with its symbols) installed by default with all their additional modules
 * **Dumpit**: Dumpit is a known tool to create a memory dump on windows machine, it's included inside ```tools``` folder, transfer it to the AD machines using Powershell remoting and collect the memory dump back
 * **Python2 and Python3**: We have both python2 & 3 installed, just be careful when you are using python or pip
 

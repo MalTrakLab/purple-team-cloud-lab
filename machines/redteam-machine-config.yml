@@ -8,16 +8,22 @@ runcmd:
   - cd /home/ec2-user
   - pwd >> /tmp/init.log
   - sudo yum update
+  - sudo yum install -y gcc python3-devel
   - sudo pip3 install boto3 >> /tmp/init.log
-  - git clone https://github.com/mitre/caldera.git --recursive --branch 3.1.0 >> /tmp/init.log
-  - chmod -R 7777 caldera >> /tmp/init.log
+  - git clone https://github.com/mitre/caldera.git --recursive --branch 4.1.0 >> /tmp/init.log
+  - chmod 7777 caldera >> /tmp/init.log
   - cd caldera >> /tmp/init.log
   - pip3 install -r requirements.txt >> /tmp/init.log
   - pip3 install marshmallow-enum==1.5.1 >> /tmp/init.log
   - pip3 install ldap3==2.7 >> /tmp/init.log
-  - pip3 install markupsafe==2.0.1 >> /tmp/init.log
+  - pip3 install aioftp==0.21.4 >> /tmp/init.log
   - echo "Done" >> /tmp/init.log 
-  - python3 server.py &
+  - sudo sh -c 'python3 server.py & sleep 30; kill $!' &
+  - sleep 30
+  - sudo chmod 777 conf/local.yml
+  - sudo sed -i '/^\s*red:\s/s/:.*/:\ LabPass1/' conf/local.yml
+  - sudo sed -i '/^\s*blue:\s/s/:.*/:\ LabPass1/' conf/local.yml
+  - sh -c 'python3 server.py & sleep 30; kill $!' &
   - sleep 30
   - echo "[Unit]" > /etc/systemd/system/caldera.service
   - echo "Description=Caldera C2 Service" >> /etc/systemd/system/caldera.service 

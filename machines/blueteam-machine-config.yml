@@ -1,7 +1,4 @@
 #cloud-config
-packages:
-  - python3
-  - python3-pip
 runcmd:
   - echo "Task Initiated" > /tmp/init.log
   - sudo yum update -y
@@ -11,9 +8,15 @@ runcmd:
   - curl -sSL https://github.com/PowerShell/PowerShell/releases/download/v7.2.3/powershell-7.2.3-1.rh.x86_64.rpm -o /tmp/powershell-linux.rpm  >> /tmp/init.log
   - sudo yum install -y /tmp/powershell-linux.rpm  >> /tmp/init.log
   - rm -f /tmp/powershell-linux.rpm
+  - sudo yum install -y python python-devel python3-devel git yara gcc
   - sudo yum upgrade -y
   - sudo yum clean all 
   - sudo rm -rf /var/cache/yum
+  - sudo yum remove python3 -y >> /tmp/init.log 
+  - sudo amazon-linux-extras install python3.8 >> /tmp/init.log 
+  - sudo ln -s /usr/bin/python3.8 /usr/bin/python3 >> /tmp/init.log 
+  - sudo ln -s /usr/bin/pip3.8 /usr/bin/pip3 >> /tmp/init.log 
+  - pip3.8 install poetry >> /tmp/init.log 
   - cd /usr/src
   - sudo yum install -y git docker httpd >> /tmp/init.log 
   - sudo systemctl enable docker
@@ -24,18 +27,21 @@ runcmd:
   - sudo ./helk_install.sh -p LabPass1 -b 'helk-kibana-analysis-alert' -i 192.168.20.100
   - sudo docker network rm helk_network
   - sudo ./helk_install.sh -p LabPass1 -b 'helk-kibana-analysis-alert' -i 192.168.20.100 
-  - sudo yum install -y python python-devel python3-devel git yara gcc
   - cd /home/ec2-user
   - git clone https://github.com/davehull/Kansa.git
   - git clone https://github.com/volatilityfoundation/volatility3.git
   - git clone https://github.com/volatilityfoundation/volatility.git
-  - wget https://github.com/SigmaHQ/sigma/archive/refs/tags/0.21.zip
-  - unzip 0.21.zip
-  - rm -rf 0.21.zip
+  - pip3.8 install sigma-cli
+  - pip install urllib3==1.26.6 >> /tmp/init.log
+  - pip3 install urllib3==1.26.6 >> /tmp/init.log
+  - pip3.8 install urllib3==1.26.6 >> /tmp/init.log
+  - mkdir sigma
+  - cd /home/ec2-user/sigma
+  - wget https://github.com/SigmaHQ/sigma/releases/download/r2024-02-12/sigma_all_rules.zip
+  - unzip sigma_all_rules.zip
+  - rm -f sigma_all_rules.zip
   - sudo chmod -R 777 /home/ec2-user/volatility
   - sudo chmod -R 777 /home/ec2-user/volatility3
-  - cd /home/ec2-user/sigma-0.21/tools
-  - sudo python3 setup.py install
   - cd /home/ec2-user/volatility
   - curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py
   - sudo python get-pip.py >> /tmp/init.log
@@ -52,6 +58,11 @@ runcmd:
   - cd /home/ec2-user/volatility3
   - python3 -m pip install -r requirements.txt
   - sudo python3 setup.py install >> /tmp/init.log
+  - mkdir /home/ec2-user/volatility3/symbols
+  - cd /home/ec2-user/volatility3/symbols
+  - wget https://downloads.volatilityfoundation.org/volatility3/symbols/windows.zip
+  - wget https://downloads.volatilityfoundation.org/volatility3/symbols/mac.zip
+  - wget https://downloads.volatilityfoundation.org/volatility3/symbols/linux.zip
   - mkdir /home/ec2-user/tools
   - cd /home/ec2-user/tools
   - wget https://github.com/Crypt2Shell/Comae-Toolkit/blob/master/Comae-Toolkit-3.0.20171228.1.zip --no-check-certificate
